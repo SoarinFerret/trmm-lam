@@ -30,7 +30,7 @@ fi
 # get the system architecture
 ARCH=$(uname -m)
 
-switch "$ARCH" in
+case "$ARCH" in
     x86_64)
         ARCH="amd64"
         ;;
