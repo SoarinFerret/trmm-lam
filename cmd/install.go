@@ -2,13 +2,12 @@ package cmd
 
 import (
 	"os"
-	"os/user"
 	"os/exec"
+	"os/user"
 
+	"github.com/pterm/pterm"
 	"github.com/soarinferret/trmm-lam/internal/tacticalrmm"
 	"github.com/spf13/cobra"
-	"github.com/pterm/pterm"
-
 )
 
 var installCmd = &cobra.Command{
@@ -73,7 +72,6 @@ var installCmd = &cobra.Command{
 			}
 		}
 
-
 		script, err := rmm.GenerateInstallerScript(client, site, agentType)
 		if err != nil {
 			pterm.Error.Println("Failed to retrieve installer script:", err)
@@ -81,7 +79,7 @@ var installCmd = &cobra.Command{
 		}
 		//pterm.Info.Println("Script: ", script)
 
-		f, err := os.Create( "/tmp/trmm-installer.sh")
+		f, err := os.Create("/tmp/trmm-installer.sh")
 		if err != nil {
 			pterm.Error.Println("Failed to create installer script on filesystem:", err)
 			return
@@ -102,6 +100,13 @@ var installCmd = &cobra.Command{
 		if usr.Uid == "0" && force {
 			pterm.Info.Println("Running installer script...")
 			exec.Command("bash", "/tmp/trmm-installer.sh")
+			// wait for the command to finish
+			err = exec.Command("bash", "/tmp/trmm-installer.sh").Run()
+			if err != nil {
+				pterm.Error.Println("Failed to run installer script:", err)
+				return
+			}
+			pterm.Success.Println("Agent installed successfully!")
 
 		} else {
 			pterm.Info.Println("Run the installer script as root (or with sudo) to install the agent")
