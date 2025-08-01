@@ -14,7 +14,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "trmm-linux-installer",
 	Short: "Installs the Tactical RMM Agent on Linux",
-	Long: ``,
+	Long:  ``,
 	//PersistentPreRun: func(cmd *cobra.Command, args []string) {
 	//},
 

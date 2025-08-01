@@ -10,6 +10,5 @@ import (
 var Version string
 
 func main() {
-
 	cmd.Execute()
 }

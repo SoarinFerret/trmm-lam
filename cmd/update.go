@@ -1,25 +1,24 @@
 package cmd
 
-
 import (
 	"fmt"
-	"os"
-	"os/exec"
 	"io"
 	"net/http"
+	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 
-	"github.com/spf13/cobra"
 	"github.com/pterm/pterm"
 	"github.com/soarinferret/trmm-lam/internal/tacticalrmm"
+	"github.com/spf13/cobra"
 )
 
 // https://stackoverflow.com/a/33853856/13335339
 func downloadFile(filepath string, url string) (err error) {
 	// Create the file
 	out, err := os.Create(filepath)
-	if err != nil  {
+	if err != nil {
 		return err
 	}
 	defer out.Close()
@@ -38,7 +37,7 @@ func downloadFile(filepath string, url string) (err error) {
 
 	// Writer the body to file
 	_, err = io.Copy(out, resp.Body)
-	if err != nil  {
+	if err != nil {
 		return err
 	}
 
