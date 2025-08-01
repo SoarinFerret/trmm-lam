@@ -1,26 +1,26 @@
 package tacticalrmm
 
-import(
-	"errors"
-	"net/http"
-	"io/ioutil"
+import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 	"strings"
 
 	"github.com/soarinferret/trmm-lam/internal/meshcentral"
 )
 
 type TacticalRMM struct {
-	url string
-	apiKey string
+	url              string
+	apiKey           string
 	agentDownloadUrl string
 }
 
 func New(url string, apiKey string, agentDl string) *TacticalRMM {
 	return &TacticalRMM{
-		url: url,
-		apiKey: apiKey,
+		url:              url,
+		apiKey:           apiKey,
 		agentDownloadUrl: agentDl,
 	}
 }
@@ -35,7 +35,6 @@ func (rmm *TacticalRMM) ensureApiUrl() error {
 
 	return nil
 }
-
 
 func (rmm *TacticalRMM) get(url string) (response string, err error) {
 	err = rmm.ensureApiUrl()
@@ -158,7 +157,7 @@ func (rmm *TacticalRMM) GetAgentToken(client int, site int) (token string, err e
 		"goarch":"amd64",
 		"api":"%s",
 		"fileName":"rmm.exe",
-		"plat":"windows"}`, client, site, rmm.url )
+		"plat":"windows"}`, client, site, rmm.url)
 
 	reader := strings.NewReader(data)
 
@@ -263,16 +262,6 @@ func (rmm *TacticalRMM) GetLatestAgentVersion() (version string, err error) {
 }
 
 func (rmm *TacticalRMM) GenerateInstallerScript(client int, site int, agentType string) (script string, err error) {
-
-	// we need the following
-	// agentDL
-	// meshDL
-	// apiURL
-	// token
-	// clientID
-	// siteID
-	// agentType
-
 	agentDL, err := rmm.GetAgentDownloadUrl()
 	if err != nil {
 		return script, err

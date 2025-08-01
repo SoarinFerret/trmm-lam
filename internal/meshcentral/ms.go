@@ -7,18 +7,16 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
-	"time"
 	"strings"
+	"time"
 
-
-	"fmt"
 	"context"
 	"errors"
+	"fmt"
 	"net/url"
 
 	"github.com/gorilla/websocket"
 )
-
 
 type MeshResponse struct {
 	Action string `json:"action"`
@@ -69,7 +67,6 @@ func GetMeshDeviceGroupId(uri string, deviceGroup string) (id string, err error)
 	if err != nil {
 		return "", err
 	}
-
 
 	return id, nil
 }
@@ -126,7 +123,6 @@ func getAuthToken(user, key, domain string) (string, error) {
 	return encoded, nil
 }
 
-
 func GetMeshWsUrl(uri string, user string, token string) (string, error) {
 	newToken, err := getAuthToken(user, token, "")
 	if err != nil {
@@ -134,5 +130,5 @@ func GetMeshWsUrl(uri string, user string, token string) (string, error) {
 	}
 
 	u, _ := url.Parse(uri)
-	return "wss://" +  u.Host + "/control.ashx?auth=" + newToken, nil
+	return "wss://" + u.Host + "/control.ashx?auth=" + newToken, nil
 }
